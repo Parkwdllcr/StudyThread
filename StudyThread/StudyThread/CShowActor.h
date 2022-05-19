@@ -12,6 +12,7 @@ public:
      ~CShowActor();
 public:
     void Process();
+	void TerminateThread();
 private:
     IStudyStl*      m_pStudyStl;
 	CSemaphore      m_Semaphore;

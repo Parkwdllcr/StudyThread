@@ -18,4 +18,15 @@ CShowActor:: CShowActor(IStudyStl*  pStudyStl):
 {
      m_pStudyStl->PrintAllElement();
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	m_Semaphore.Trigger();
 };
+
+ void CShowActor::TerminateThread()
+ {
+	 Stop();
+	 if (m_Semaphore.Wait(30*30))
+	 {
+	 }
+
+	 std::this_thread::sleep_for(std::chrono::milliseconds(50));
+ }
