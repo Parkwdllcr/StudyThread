@@ -151,7 +151,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CAddActor.cpp" />
+    <ClCompile Include="CDeleteActor.cpp" />
+    <ClCompile Include="CSemaphore.cpp" />
+    <ClCompile Include="CShowActor.cpp" />
+    <ClCompile Include="CStudyList.cpp" />
+    <ClCompile Include="CStudyMap.cpp" />
+    <ClCompile Include="CThread.cpp" />
     <ClCompile Include="StudyThread.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CAddActor.h" />
+    <ClInclude Include="CDeleteActor.h" />
+    <ClInclude Include="CSemaphore.h" />
+    <ClInclude Include="CShowActor.h" />
+    <ClInclude Include="CStudyList.h" />
+    <ClInclude Include="CStudyMap.h" />
+    <ClInclude Include="CThread.h" />
+    <ClInclude Include="IStudySTL.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

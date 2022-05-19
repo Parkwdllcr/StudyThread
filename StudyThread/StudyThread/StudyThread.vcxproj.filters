@@ -18,5 +18,52 @@
     <ClCompile Include="StudyThread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CAddActor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeleteActor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSemaphore.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CShowActor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CStudyList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CStudyMap.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CThread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CAddActor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CDeleteActor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSemaphore.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CShowActor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CStudyList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CStudyMap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CThread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IStudySTL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
