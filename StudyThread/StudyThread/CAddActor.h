@@ -12,5 +12,4 @@ public:
     void Process();
 private:
     IStudyStl*                     m_pStudyStl;
-	std::mutex                     m_Mutex;
 };

@@ -5,7 +5,7 @@
 
 
  CDeleteActor::CDeleteActor(IStudyStl*  pStudyStl):
-              m_pStudyStl(pStudyStl),m_Mutex()
+              m_pStudyStl(pStudyStl)
  {
 
  }
@@ -17,7 +17,6 @@ CDeleteActor:: ~CDeleteActor()
 
 void CDeleteActor::Process()
 {
-	std::lock_guard<std::mutex> lock(m_Mutex);
     m_pStudyStl->DeleteAllElement();
 	std::this_thread::sleep_for(std::chrono::milliseconds(50));
 

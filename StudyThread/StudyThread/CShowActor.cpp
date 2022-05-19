@@ -4,7 +4,7 @@
 #include<iostream>
 
 CShowActor:: CShowActor(IStudyStl*  pStudyStl):
-              m_pStudyStl(pStudyStl),m_Mutex()
+              m_pStudyStl(pStudyStl)
  {
 
  }
@@ -16,8 +16,6 @@ CShowActor:: CShowActor(IStudyStl*  pStudyStl):
 
  void  CShowActor::Process()
 {
-	 std::lock_guard<std::mutex> lock(m_Mutex);
      m_pStudyStl->PrintAllElement();
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
-
 };

@@ -4,7 +4,7 @@
 #include <iostream>
 
  CAddActor:: CAddActor(IStudyStl*  pStudyStl):
-              m_pStudyStl(pStudyStl),m_Mutex()
+              m_pStudyStl(pStudyStl)
  {
 
  }
@@ -16,7 +16,6 @@
 
 void CAddActor::Process()
 {
-	std::lock_guard<std::mutex> lock(m_Mutex);
 	m_pStudyStl->AddElement();
 	std::this_thread::sleep_for(std::chrono::milliseconds(50));
 }

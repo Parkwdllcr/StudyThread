@@ -2,6 +2,7 @@
 
 #include "CThread.h"
 #include "IStudyStl.h"
+#include "CSemaphore.h"
 
 class IStudyStl;
 class CShowActor:public CThread
@@ -13,5 +14,5 @@ public:
     void Process();
 private:
     IStudyStl*      m_pStudyStl;
-	std::mutex      m_Mutex;
+	CSemaphore      m_Semaphore;
 };

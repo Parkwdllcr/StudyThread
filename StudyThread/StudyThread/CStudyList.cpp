@@ -25,7 +25,7 @@ std::shared_ptr<IStudyStl>CStudyList::GetInstance()
 void CStudyList::AddElement()
 {
 	std::cout << "<--------CStudyList::AddElement-------->" << std::endl;
-
+	std::lock_guard<std::mutex> lock(m_Mutex);
 	if (m_iListTest.size()>10)
 	{
 		std::cout << " iCount of AddElement is morn than 10!" << std::endl;
