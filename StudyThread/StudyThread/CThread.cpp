@@ -40,9 +40,11 @@ void CThread::Stop()
 	{
 		m_bPauseFlag = false;
 		m_bStopFlag = true;
-		m_Condition.notify_all();  // Notify one waiting thread, if there is one.
+		if (m_enState == Paused)
+		{
+			m_Condition.notify_all();  // Notify one waiting thread, if there is one.
+		}
 		m_pThread->join(); // wait for thread finished
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		m_enState = Stoped;
 		delete m_pThread;
 		m_pThread = nullptr;
@@ -72,9 +74,6 @@ void CThread::Run()
 {
 	std::cout << "enter thread:" << this_thread::get_id() << std::endl;
 
-	Process();
-
-
 	while (!m_bStopFlag)
 	{
 		Process();
@@ -90,6 +89,5 @@ void CThread::Run()
 	}
 	m_bPauseFlag = false;
 	m_bStopFlag = false;
-
 	cout << "exit thread:" << this_thread::get_id() << endl;
 }

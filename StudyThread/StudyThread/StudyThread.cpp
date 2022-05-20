@@ -19,15 +19,21 @@ int main()
 	std::shared_ptr<CShowActor> pShowThread(new(std::nothrow) CShowActor(pList));
 
 	pAddThread->Start();
-	std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	pAddThread->Stop();
 
-	pDeletThread->Start();
-	std::this_thread::sleep_for(std::chrono::milliseconds(5));
-	pDeletThread->Stop();
-
 	pShowThread->Start();
-	//std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+	pDeletThread->Start();
+	std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+	//pShowThread->Start();
+	std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+	pDeletThread->Stop();
 	pShowThread->Stop();
+
+
 }
 
