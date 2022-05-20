@@ -15,19 +15,19 @@ int main()
 	IStudyStl* pList = pStudylist.get();
 
 	std::shared_ptr<CAddActor> pAddThread(new(std::nothrow) CAddActor(pList));
+	std::shared_ptr<CDeleteActor> pDeletThread(new(std::nothrow) CDeleteActor(pList));
+	std::shared_ptr<CShowActor> pShowThread(new(std::nothrow) CShowActor(pList));
+
 	pAddThread->Start();
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	pAddThread->Stop();
 
-	std::shared_ptr<CDeleteActor> pDeletThread(new(std::nothrow) CDeleteActor(pList));
 	pDeletThread->Start();
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
-
-	std::shared_ptr<CShowActor> pShowThread(new(std::nothrow) CShowActor(pList));
-	pShowThread->Start();
-	std::this_thread::sleep_for(std::chrono::milliseconds(5));
-
-	pAddThread->Stop();
 	pDeletThread->Stop();
+
+	pShowThread->Start();
+	//std::this_thread::sleep_for(std::chrono::milliseconds(5));
 	pShowThread->Stop();
 }
 

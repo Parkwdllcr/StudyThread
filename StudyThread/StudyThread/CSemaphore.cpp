@@ -1,12 +1,13 @@
 #include "CSemaphore.h"
 
 CSemaphore::CSemaphore(std::string strName, unsigned long ulCount /*= 0*/)
-    :m_ulCount(ulCount),m_strName(strName)
+    :m_ulCount(ulCount),m_strName(strName),m_mutex(), m_condition()
 {
 
 }
 
 CSemaphore::CSemaphore()
+	:m_ulCount(0), m_strName(""), m_mutex(), m_condition()
 {
 
 }
@@ -21,60 +22,85 @@ bool CSemaphore::Wait(int64_t iTimeOut)
 	try
 	{
 		std::unique_lock<std::mutex> lock(m_mutex);
-		switch (iTimeOut)
+		std::cv_status status = m_condition.wait_for(lock, std::chrono::milliseconds(iTimeOut));
+		if (status == std::cv_status::timeout)
 		{
-		case -1://资源不足，永久等待
-			m_condition.wait(lock); // 阻塞
-			break;
-		case 0://不等待
-			break;
-		default:
-			std::cv_status status = m_condition.wait_for(lock, std::chrono::milliseconds(iTimeOut));
-			if (status == std::cv_status::timeout)   // 超时
-			{
-				std::cout << m_strName + ":timeout" << std::endl;
-				m_ulCount = 0;
-				m_condition.notify_all();//唤醒所有阻塞线程
-			}
-			break;
+			std::cout << m_strName + ":timeout" << std::endl;
+			m_ulCount = 0;
+			m_condition.notify_all();//唤醒所有阻塞线程
+			return false;
 		}
-		--m_ulCount;
+		if (--m_ulCount <0)
+		{
+			m_condition.wait(lock);
+		}
 		return true;
 
+		//switch (iTimeOut)
+		//{
+		//case -1://资源不足，永久等待
+		//	m_condition.wait(lock); // 阻塞
+		//	break;
+		//case 0://不等待
+		//	break;
+		//default:
+		//	std::cv_status status = m_condition.wait_for(lock, std::chrono::milliseconds(iTimeOut));
+		//	if (status == std::cv_status::timeout)   // 超时
+		//	{
+		//		std::cout << m_strName + ":timeout" << std::endl;
+		//		m_ulCount = 0;
+		//		m_condition.notify_all();//唤醒所有阻塞线程
+		//	}
+		//	break;
+		//}
+		//--m_ulCount;
+		//return true;
 	}
-	catch (const std::exception&)
+	catch (const std::exception&e)
 	{
-		std::cout << "CSemaphore::Wait Get a Unknow Error!" << std::endl;
+		std::cout << e.what()<< std::endl;
 		return false;
 	}
     
 }
 
-void CSemaphore::Trigger()
+bool CSemaphore::Trigger()
 {
 	try
 	{
+		std::unique_lock<std::mutex> lock(m_mutex);
 		if ((++m_ulCount) <= 0)
-		{
-			std::unique_lock<std::mutex> lock(m_mutex);
+		{	
 			m_condition.notify_one();
 		}
+		return true;
 	}
-	catch (const std::exception&)
+	catch (const std::exception&e)
 	{
-		std::cout << "CSemaphore::Trgger Get a Unknow Error!" << std::endl;
+		std::cout << e.what() << std::endl;
+		return false;
 	}
 	
 	
 }
 
-void CSemaphore::TriggerAll()
+bool CSemaphore::TriggerAll()
 {
-	std::lock_guard<std::mutex> lock(m_mutex);
-	while (++m_ulCount <= 0) {
-		m_condition.notify_one();
+	try
+	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+		while (++m_ulCount <= 0) {
+			m_condition.notify_one();
+		}
+		m_ulCount = 0;
+		return true;
 	}
-	m_ulCount = 0;
+	catch (std::exception& e)
+	{
+		std::cout << e.what() << std::endl;
+		return false;
+	}
+
 }
 
 std::string CSemaphore::GetMyName()

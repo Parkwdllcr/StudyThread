@@ -22,10 +22,10 @@ public:
 	CSemaphore& operator=(const CSemaphore&) = delete;
 
 public:
-	bool Wait(int64_t iTimeOut);
-	void Trigger();
+	bool Wait(int64_t iTimeOut = 0);
+	bool Trigger();
 
-    void TriggerAll();
+    bool TriggerAll();
 
 public:
     std::string GetMyName();
